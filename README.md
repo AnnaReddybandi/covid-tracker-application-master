@@ -38,20 +38,18 @@ COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE
 
 ## 4. Installation
 
-i. Clone the repository:
+1. Clone the repository:
 ```bash
 git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git
 cd covid-tracker-application-master
+Explore the project folder in IntelliJ IDEA.
 
-ii. Explore the project folder in IntelliJ IDEA
-
-iii. Let Maven import dependencies
-
+Let Maven import all dependencies.
 
 5. How To Use (DevOps Workflow)
 Step 1: Run Locally
 
-Run CovidTrackerApplication.java in IntelliJ IDE
+Run CovidTrackerApplication.java in IntelliJ IDE.
 
 Set port in src/main/resources/application.properties:
 
@@ -71,7 +69,8 @@ Access the app: http://localhost:9088/covid
 
 Step 4: CI/CD with Jenkins
 
-Pipeline automates: code checkout → Maven build → Docker image → deployment readiness
+Jenkins pipeline automates:
+Code checkout → Maven build → Docker image → Deployment readiness
 
 Pipeline file: jenkinsfile
 
@@ -79,7 +78,15 @@ Step 5: Infrastructure as Code (Terraform)
 
 AWS resources provisioned via Terraform in T1-T2-Development-Plan/:
 
-VPC, Security Groups, Key Pair, EKS Cluster, Jenkins installation
+VPC
+
+Security Groups
+
+Key Pair
+
+EKS Cluster
+
+Jenkins installation
 
 Terraform commands:
 
@@ -92,27 +99,34 @@ Step 6: Kubernetes Deployment
 
 Deployment & Service defined in deployment-service.yml
 
+Apply configuration:
+
 kubectl apply -f deployment-service.yml
 
+6. Project Objective
+
+This project demonstrates a full end-to-end DevOps workflow:
+
+Backend built using Java Spring Boot and Maven.
+
+Containerized the application using Docker for consistent environments.
+
+Automated CI/CD pipeline using Jenkins for code checkout, build, Docker image creation, and deployment readiness.
+
+Provisioned cloud infrastructure using Terraform, including VPC, security groups, key pairs, Jenkins installation, and EKS cluster.
+
+Kubernetes deployment and service configuration to enable container deployment, scaling, and service exposure.
+
+Note: AWS resources are not deployed due to account limitations, but the setup is production-ready and cloud-compatible.
+
+Overall, this project demonstrates real-world DevOps practices: CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
 
 
+---
 
-## Project Objective:
+This version is:
 
-
-This project is a Covid Tracker application built using Spring Boot, and the main objective was to demonstrate an end-to-end DevOps automation workflow.
-
-I started with the application layer, where the backend is developed using Java and Spring Boot, and Maven is used as the build tool.
-
-Next, I containerized the application using Docker. The Dockerfile packages the Spring Boot JAR into a container so that the application runs consistently across all environments.
-
-For CI/CD, I created a Jenkins pipeline defined in the jenkinsfile. Whenever code is pushed to GitHub, Jenkins checks out the code, builds the application using Maven, creates a Docker image, and prepares it for deployment.
-
-For infrastructure, I used Terraform as Infrastructure as Code. The Terraform scripts define AWS resources such as VPC, security groups, key pairs, Jenkins installation, and an EKS cluster. This makes the infrastructure reusable, version-controlled, and production-ready.
-
-For deployment and orchestration, I added Kubernetes configuration using a deployment and service YAML file. This enables container deployment, scaling, and service exposure, and the setup is ready for EKS deployment.
-
-Currently, AWS resources are not deployed due to account limitations, but the entire setup is cloud-ready and can be deployed with minimal changes.
-
-Overall, this project demonstrates real-world DevOps practices including CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
-
+- ✅ Logically ordered  
+- ✅ Clean headings (Project → Tech → Data → Installation → Usage → DevOps workflow → Objective)  
+- ✅ DevOps-focused, mentions Docker, Jenkins, Terraform, Kubernetes  
+- ✅ Custom port 9088 is applied  
