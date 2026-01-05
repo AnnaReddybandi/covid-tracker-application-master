@@ -47,7 +47,7 @@ cd covid-tracker-application-master
 Open the project folder in IntelliJ IDEA.
 Let Maven import all dependencies automatically.
 
-2. How To Use (DevOps Workflow)
+## 2. How To Use (DevOps Workflow)
 Step 1: Run Locally
 Run CovidTrackerApplication.java in IntelliJ IDE.
 
@@ -65,8 +65,43 @@ Access the app via Docker: http://localhost:9088/covid
 
 ## Step 4: CI/CD with Jenkins
 
-Jenkins pipeline automates:
-Code checkout → Maven build → Docker image → Deployment readiness
+The Jenkins pipeline automates the full application delivery process in this order:
+
+SCM Checkout
+
+- Pulls the latest code from GitHub (main branch)
+
+- Repository: https://github.com/AnnaReddybandi/covid-tracker-application-master.git
+
+Build
+
+- Runs Maven to compile and package the Spring Boot application
+
+- Command: mvn clean package
+
+Code Analysis (SonarQube)
+
+- Scans the code for quality, bugs, and vulnerabilities
+
+- Uses SonarQube server and project key defined in the pipeline
+
+Build Docker Image
+
+- Packages the application into a Docker container
+
+- Docker image name: annareddy/t1-project:vigridtest
+
+Push Docker Image to DockerHub
+
+- Logs in to DockerHub using credentials stored in Jenkins
+
+Pushes the built image to DockerHub repository
+
+- Deploy to Kubernetes (Optional / EKS)
+
+- Applies the deployment-service.yml to deploy containers
+
+- Ensures Deployment is rolled out successfully
 
 Pipeline file: jenkinsfile
 
