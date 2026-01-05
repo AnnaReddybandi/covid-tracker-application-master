@@ -48,34 +48,32 @@ Let Maven import all dependencies.
 
 5. How To Use (DevOps Workflow)
 Step 1: Run Locally
-
 Run CovidTrackerApplication.java in IntelliJ IDE.
 
 Set port in src/main/resources/application.properties:
 
+ini
+Copy code
 server.port=9088
-
-
 Access the app in browser: http://localhost:9088
 
 Step 2: Build Docker Image
+bash
+Copy code
 docker build -t covid-tracker-app .
-
 Step 3: Run Docker Container
+bash
+Copy code
 docker run -d -p 9088:8080 --name covid-tracker covid-tracker-app
-
-
 Access the app: http://localhost:9088/covid
 
 Step 4: CI/CD with Jenkins
-
 Jenkins pipeline automates:
 Code checkout → Maven build → Docker image → Deployment readiness
 
 Pipeline file: jenkinsfile
 
 Step 5: Infrastructure as Code (Terraform)
-
 AWS resources provisioned via Terraform in T1-T2-Development-Plan/:
 
 VPC
@@ -90,21 +88,21 @@ Jenkins installation
 
 Terraform commands:
 
+bash
+Copy code
 terraform init
 terraform validate
 terraform plan
 terraform apply
-
 Step 6: Kubernetes Deployment
-
 Deployment & Service defined in deployment-service.yml
 
 Apply configuration:
 
+bash
+Copy code
 kubectl apply -f deployment-service.yml
-
 6. Project Objective
-
 This project demonstrates a full end-to-end DevOps workflow:
 
 Backend built using Java Spring Boot and Maven.
@@ -121,6 +119,8 @@ Note: AWS resources are not deployed due to account limitations, but the setup i
 
 Overall, this project demonstrates real-world DevOps practices: CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
 
+yaml
+Copy code
 
 ---
 
@@ -128,5 +128,5 @@ This version is:
 
 - ✅ Logically ordered  
 - ✅ Clean headings (Project → Tech → Data → Installation → Usage → DevOps workflow → Objective)  
-- ✅ DevOps-focused, mentions Docker, Jenkins, Terraform, Kubernetes  
+- ✅ DevOps-focused, mentions **Docker, Jenkins, Terraform, Kubernetes**  
 - ✅ Custom port 9088 is applied  
