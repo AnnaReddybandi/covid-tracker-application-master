@@ -1,83 +1,101 @@
-# Covid Tracker Application  DevOps Automation Project
+# Project Title
+A COVID-19 Tracker Web Application
 
-## Project Overview
-This project demonstrates an end-to-end DevOps automation workflow for a Spring Bootbased Covid Tracker application.  
-It focuses on containerization, CI/CD automation, infrastructure as code, and Kubernetes-ready deployment using industry best practices.
+## 1. Project Description
+A Java Spring Boot Web application for tracking global COVID-19 cases.  
+This repository also demonstrates **DevOps automation** including Docker, Jenkins CI/CD, Terraform infrastructure, and Kubernetes deployment readiness.
 
-## Tech Stack
-Backend: Java, Spring Boot  
-Build Tool: Maven (Maven Wrapper)  
-Containerization: Docker  
-CI/CD: Jenkins  
-Infrastructure as Code: Terraform  
-Orchestration: Kubernetes (EKS-ready)  
-Cloud Provider: AWS (infrastructure scripts provided)
+---
 
-## Repository Structure
-covid-tracker-application  
- src/  Spring Boot source code  
- pom.xml  Maven configuration  
- mvnw / mvnw.cmd  Maven wrapper  
- Dockerfile  Docker image definition  
- jenkinsfile  Jenkins CI/CD pipeline  
- deployment-service.yml  Kubernetes Deployment & Service  
- T1-T2-Development-Plan/  Terraform AWS infrastructure  
-    Vpc.tf  
-    Eks-cluster.tf  
-    security-groups.tf  
-    key_pair.tf  
-    Jenkins-install.tf  
-    provider.tf  
-    terraform.tfvars  
-    output.tf  
- README.md  
+## 2. Tech Stack
 
-## Prerequisites
-Git, Java 17+, Docker, Jenkins, Terraform, Kubernetes CLI (kubectl)
+- HTML / Bootstrap  
+- JavaScript  
+- Java 11 / 17  
+- Spring Boot 2.7.5  
+- Maven  
+- IntelliJ IDE  
 
-## How to Access Locally
+**Spring Dependencies:**  
+- Spring Web  
+- Thymeleaf  
+- Spring Boot Dev Tools  
 
-### Run Using Maven
-git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git  
-cd covid-tracker-application-master  
-./mvnw clean package  
-./mvnw spring-boot:run  
+**DevOps Tools:**  
+- Docker  
+- Jenkins  
+- Terraform  
+- Kubernetes (kubectl)  
 
-Access URL: http://localhost:8080
+---
 
-### Run Using Docker
-docker build -t covid-tracker-app .  
-docker run -d -p 8080:8080 --name covid-tracker covid-tracker-app  
+## 3. Data Source Used
+COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University  
 
-Access URL: http://localhost:8080
+[CSSE COVID-19 Time Series Data](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
 
-## CI/CD Pipeline (Jenkins)
-The Jenkins pipeline automates code checkout, Maven build, Docker image creation, and deployment readiness.
+---
 
-Pipeline Flow:  
-GitHub  Jenkins  Build  Test  Docker  Deploy  
+## 4. Installation
 
-Pipeline definition is available in the `jenkinsfile`.
+i. Clone the repository:
+```bash
+git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git
+cd covid-tracker-application-master
 
-## Infrastructure as Code (Terraform)
-Terraform scripts provision AWS infrastructure such as VPC, Security Groups, Key Pair, Jenkins, and EKS.
+ii. Explore the project folder in IntelliJ IDEA
 
-Terraform Commands:  
-terraform init  
-terraform validate  
-terraform plan  
-terraform apply  
+iii. Let Maven import dependencies
 
-Note: AWS resources are not created due to account limitations. The setup is production-ready.
 
-## Kubernetes Deployment
-Kubernetes deployment and service configuration is defined in `deployment-service.yml`.
+5. How To Use (DevOps Workflow)
+Step 1: Run Locally
 
-Apply Configuration:  
-kubectl apply -f deployment-service.yml  
+Run CovidTrackerApplication.java in IntelliJ IDE
 
-## Source Code Repository
-https://github.com/AnnaReddybandi/covid-tracker-application-master
+Set port in src/main/resources/application.properties:
+
+server.port=9088
+
+
+Access the app in browser: http://localhost:9088
+
+Step 2: Build Docker Image
+docker build -t covid-tracker-app .
+
+Step 3: Run Docker Container
+docker run -d -p 9088:8080 --name covid-tracker covid-tracker-app
+
+
+Access the app: http://localhost:9088
+
+Step 4: CI/CD with Jenkins
+
+Pipeline automates: code checkout → Maven build → Docker image → deployment readiness
+
+Pipeline file: jenkinsfile
+
+Step 5: Infrastructure as Code (Terraform)
+
+AWS resources provisioned via Terraform in T1-T2-Development-Plan/:
+
+VPC, Security Groups, Key Pair, EKS Cluster, Jenkins installation
+
+Terraform commands:
+
+terraform init
+terraform validate
+terraform plan
+terraform apply
+
+Step 6: Kubernetes Deployment
+
+Deployment & Service defined in deployment-service.yml
+
+kubectl apply -f deployment-service.yml
+
+
+
 
 ## Project Objective:
 
