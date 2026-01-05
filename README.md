@@ -46,13 +46,13 @@ Explore the project folder in IntelliJ IDEA.
 
 Let Maven import all dependencies.
 
-5. How To Use (DevOps Workflow)
-Step 1: Run Locally
+## 5. How To Use (DevOps Workflow)
+ Step 1: Run Locally
 Run CovidTrackerApplication.java in IntelliJ IDE.
 
 Set port in src/main/resources/application.properties:
 
-ini
+init
 Copy code
 server.port=9088
 Access the app in browser: http://localhost:9088
@@ -102,25 +102,20 @@ Apply configuration:
 bash
 Copy code
 kubectl apply -f deployment-service.yml
-6. Project Objective
+## 6. Project Objective
+
 This project demonstrates a full end-to-end DevOps workflow:
-
-Backend built using Java Spring Boot and Maven.
-
-Containerized the application using Docker for consistent environments.
-
-Automated CI/CD pipeline using Jenkins for code checkout, build, Docker image creation, and deployment readiness.
-
-Provisioned cloud infrastructure using Terraform, including VPC, security groups, key pairs, Jenkins installation, and EKS cluster.
-
-Kubernetes deployment and service configuration to enable container deployment, scaling, and service exposure.
+- Backend built using Java Spring Boot and Maven.
+- Containerized the application using Docker for consistent environments.
+- Automated CI/CD pipeline using Jenkins for code checkout, build, Docker image creation, and deployment readiness.
+- Provisioned cloud infrastructure using Terraform, including VPC, security groups, key pairs, Jenkins installation, and EKS cluster.
+- Kubernetes deployment and service configuration to enable container deployment, scaling, and service exposure.
 
 Note: AWS resources are not deployed due to account limitations, but the setup is production-ready and cloud-compatible.
-
 Overall, this project demonstrates real-world DevOps practices: CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
 
 yaml
-Copy code
+
 
 ---
 
