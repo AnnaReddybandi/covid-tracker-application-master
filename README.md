@@ -42,44 +42,38 @@ COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE
 ```bash
 git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git
 cd covid-tracker-application-master
-Open project folder in IntelliJ IDEA.
 
-Let Maven import all dependencies.
+2. Open the project folder in IntelliJ IDEA.
+3. Let Maven import all dependencies.
 
 5. How To Use (DevOps Workflow)
 Step 1: Run Locally
+
 Run CovidTrackerApplication.java in IntelliJ IDE.
-
 Set the port in src/main/resources/application.properties:
-
-properties
-Copy code
 server.port=9088
-Access the app in browser:
+http://localhost:9088/covid
 
-arduino
-Copy code
-http://localhost:9088
 Step 2: Build Docker Image
-bash
-Copy code
 docker build -t covid-tracker-app .
+
 Step 3: Run Docker Container
-bash
-Copy code
 docker run -d -p 9088:8080 --name covid-tracker covid-tracker-app
+
+
 Access URL via Docker:
 
-bash
-Copy code
 http://localhost:9088/covid
+
 Step 4: CI/CD with Jenkins
+
 Jenkins pipeline automates:
 Code checkout → Maven build → Docker image → Deployment readiness
 
 Pipeline file: jenkinsfile
 
 Step 5: Infrastructure as Code (Terraform)
+
 AWS resources provisioned via Terraform in T1-T2-Development-Plan/:
 
 VPC
@@ -94,21 +88,44 @@ Jenkins installation
 
 Terraform commands:
 
-bash
-Copy code
 terraform init
 terraform validate
 terraform plan
 terraform apply
+
 Step 6: Kubernetes Deployment
-Deployment & Service defined in deployment-service.yml
+
+Deployment & Service defined in deployment-service.yml.
 
 Apply configuration:
 
-bash
-Copy code
 kubectl apply -f deployment-service.yml
+
+
+Example deployment snippet from deployment-service.yml:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-tracker-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: covid-tracker
+  template:
+    metadata:
+      labels:
+        app: covid-tracker
+    spec:
+      containers:
+      - name: covid-tracker
+        image: covid-tracker-app:latest
+        ports:
+        - containerPort: 8080
+
 6. Project Objective
+
 This project demonstrates a full end-to-end DevOps workflow:
 
 Backend built using Java Spring Boot and Maven
@@ -124,3 +141,6 @@ Kubernetes deployment and service configuration to enable container deployment, 
 Note: AWS resources are not deployed due to account limitations, but the setup is production-ready and cloud-compatible.
 
 Overall, this project demonstrates real-world DevOps practices: CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
+
+
+
