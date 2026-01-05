@@ -2,52 +2,48 @@ pipeline {
     agent any
 
     environment {
-        RESTAPI = 't1-project'
+        RESTAPI = 'covid-tracker-application-master'
         DOCKERFILE_BRANCH = 'main'
         DOCKER_HUB_REGISTRY = 'docker.io'
+        DOCKER_IMAGE_NAME = 'annareddy/t1-project'
         IMAGE_TAG = 'vigridtest'
         SONAR_SERVER_URL = 'http://13.52.74.172:9000/'
         SONAR_LOGIN = 'squ_ce7aea3c209111cb93109150676fa7ee694c3ac3'
-        KUBECONFIG_PATH = '/home/ubuntu/.kube/config'  // Update this path
+        KUBECONFIG_PATH = '/home/ubuntu/.kube/config' // Path to kubeconfig on Jenkins agent
     }
 
     tools {
         maven 'Maven-3.8.4'
-        jdk 'jdk-path'
+        jdk 'jdk-path'  // Replace with your configured JDK in Jenkins
     }
 
     stages {
-        stage('SCM') {
+        stage('SCM Checkout') {
             steps {
-                dir("${WORKSPACE}/${RESTAPI}") {
-                    git branch: 'main', url: 'https://github.com/Suryanarayana8099/covid-tracker-application.git'
-                }
+                git branch: 'main', url: 'https://github.com/AnnaReddybandi/covid-tracker-application-master.git'
             }
         }
 
         stage('Build') {
             steps {
                 script {
-                    // Build
-                    dir("${WORKSPACE}/${RESTAPI}") {
-                        sh 'mvn clean package'
-                    }
-                    // Build the Docker image
-                    dir("${WORKSPACE}/${RESTAPI}") {
-                        withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                            sh "sudo docker build -t ${DOCKER_HUB_REGISTRY}/${env.dockerHubUser}/${RESTAPI}:${IMAGE_TAG} ."
-                        }
+                    // Maven build
+                    sh 'mvn clean package'
+
+                    // Build Docker image
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USER')]) {
+                        sh "docker build -t ${DOCKER_HUB_REGISTRY}/${DOCKER_HUB_USER}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
             }
         }
 
-        stage('Pushing to DockerHub') {
+        stage('Push to DockerHub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                        sh "sudo docker login -u ${env.dockerHubUser} -p ${dockerHubPassword}"
-                        sh "sudo docker push ${DOCKER_HUB_REGISTRY}/${env.dockerHubUser}/${RESTAPI}:${IMAGE_TAG}"
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USER')]) {
+                        sh "docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}"
+                        sh "docker push ${DOCKER_HUB_REGISTRY}/${DOCKER_HUB_USER}/${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
@@ -59,28 +55,36 @@ pipeline {
             }
             steps {
                 script {
-                    dir("${WORKSPACE}/${RESTAPI}") {
-                        sh "${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectKey=T1 \
-                            -Dsonar.projectName=T1 \
-                            -Dsonar.sources=. \
-                            -Dsonar.java.binaries=target/classes \
-                            -Dsonar.host.url=${SONAR_SERVER_URL} \
-                            -Dsonar.login=${SONAR_LOGIN}"
-                    }
+                    sh "${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=CovidTracker \
+                        -Dsonar.projectName=CovidTracker \
+                        -Dsonar.sources=. \
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.host.url=${SONAR_SERVER_URL} \
+                        -Dsonar.login=${SONAR_LOGIN}"
                 }
             }
         }
 
-        stage('Deploy to EKS') {
+        stage('Deploy to Kubernetes (EKS)') {
             steps {
                 script {
-                    // Assuming Jenkins already has access to the EKS cluster
-                    dir("${WORKSPACE}/${RESTAPI}") {
-                        sh "sudo kubectl apply -f deployment-service.yml"
-                    }
+                    // Apply Deployment and Service YAML
+                    sh "kubectl apply -f deployment-service.yml --kubeconfig=${KUBECONFIG_PATH}"
+
+                    // Optional: Wait until the Deployment is ready
+                    sh "kubectl rollout status deployment/devops --kubeconfig=${KUBECONFIG_PATH}"
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Check logs for details."
         }
     }
 }
