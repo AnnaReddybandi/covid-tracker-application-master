@@ -37,22 +37,29 @@ COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE
 ---
 
 ## 4. Installation
+1. Project Setup
 
-1. Clone the repository:
-```bash
+Clone the repository:
+
 git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git
 cd covid-tracker-application-master
 
-2. Open the project folder in IntelliJ IDEA.
-3. Let Maven import all dependencies.
 
-5. How To Use (DevOps Workflow)
+Open the project folder in IntelliJ IDEA.
+
+Let Maven import all dependencies automatically.
+
+2. How To Use (DevOps Workflow)
 Step 1: Run Locally
 
 Run CovidTrackerApplication.java in IntelliJ IDE.
+
 Set the port in src/main/resources/application.properties:
+
 server.port=9088
-http://localhost:9088/covid
+
+
+Access the app in the browser: http://localhost:9088/covid
 
 Step 2: Build Docker Image
 docker build -t covid-tracker-app .
@@ -61,9 +68,7 @@ Step 3: Run Docker Container
 docker run -d -p 9088:8080 --name covid-tracker covid-tracker-app
 
 
-Access URL via Docker:
-
-http://localhost:9088/covid
+Access the app via Docker: http://localhost:9088/covid
 
 Step 4: CI/CD with Jenkins
 
@@ -82,7 +87,7 @@ Security Groups
 
 Key Pair
 
-EKS Cluster
+EKS Cluster (ready, but not deployed)
 
 Jenkins installation
 
@@ -93,38 +98,7 @@ terraform validate
 terraform plan
 terraform apply
 
-Step 6: Kubernetes Deployment
-
-Deployment & Service defined in deployment-service.yml.
-
-Apply configuration:
-
-kubectl apply -f deployment-service.yml
-
-
-Example deployment snippet from deployment-service.yml:
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: covid-tracker-deployment
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: covid-tracker
-  template:
-    metadata:
-      labels:
-        app: covid-tracker
-    spec:
-      containers:
-      - name: covid-tracker
-        image: covid-tracker-app:latest
-        ports:
-        - containerPort: 8080
-
-6. Project Objective
+3. Project Objective
 
 This project demonstrates a full end-to-end DevOps workflow:
 
@@ -132,15 +106,12 @@ Backend built using Java Spring Boot and Maven
 
 Containerized the application using Docker for consistent environments
 
-Automated CI/CD pipeline using Jenkins for code checkout, build, Docker image creation, and deployment readiness
+Automated CI/CD pipeline using Jenkins for code checkout, build, and Docker image creation
 
-Provisioned cloud infrastructure using Terraform, including VPC, security groups, key pairs, Jenkins installation, and EKS cluster
-
-Kubernetes deployment and service configuration to enable container deployment, scaling, and service exposure
+Provisioned cloud infrastructure using Terraform (VPC, security groups, key pairs, Jenkins, EKS cluster)
 
 Note: AWS resources are not deployed due to account limitations, but the setup is production-ready and cloud-compatible.
 
-Overall, this project demonstrates real-world DevOps practices: CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
-
+Overall: This project demonstrates real-world DevOps practices, including CI/CD automation, containerization, and infrastructure as code.
 
 
