@@ -20,7 +20,7 @@ pipeline {
         stage('SCM') {
             steps {
                 dir("${WORKSPACE}/${RESTAPI}") {
-                    git branch: 'master', url: 'https://github.com/Suryanarayana8099/covid-tracker-application.git'
+                    git branch: 'main', url: 'https://github.com/Suryanarayana8099/covid-tracker-application.git'
                 }
             }
         }
