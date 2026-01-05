@@ -1,65 +1,100 @@
-# Project Tit
-A COVID-19 Tracker Web Application
-## 1. Project Description: 
+# Covid Tracker Application  DevOps Automation Project
 
-A Java Spring Boot Web application for tracking global Corona Virus (COVID-19) cases.
+## Project Overview
+This project demonstrates an end-to-end DevOps automation workflow for a Spring Bootbased Covid Tracker application.  
+It focuses on containerization, CI/CD automation, infrastructure as code, and Kubernetes-ready deployment using industry best practices.
 
-## 2. Tech Stack:
+## Tech Stack
+Backend: Java, Spring Boot  
+Build Tool: Maven (Maven Wrapper)  
+Containerization: Docker  
+CI/CD: Jenkins  
+Infrastructure as Code: Terraform  
+Orchestration: Kubernetes (EKS-ready)  
+Cloud Provider: AWS (infrastructure scripts provided)
 
-- HTML / Bootstrap
-- JavaScript 
-- Java 11
-- Spring Boot 2.7.5
-- Maven
-- Intellij IDE
+## Repository Structure
+covid-tracker-application  
+ src/  Spring Boot source code  
+ pom.xml  Maven configuration  
+ mvnw / mvnw.cmd  Maven wrapper  
+ Dockerfile  Docker image definition  
+ jenkinsfile  Jenkins CI/CD pipeline  
+ deployment-service.yml  Kubernetes Deployment & Service  
+ T1-T2-Development-Plan/  Terraform AWS infrastructure  
+    Vpc.tf  
+    Eks-cluster.tf  
+    security-groups.tf  
+    key_pair.tf  
+    Jenkins-install.tf  
+    provider.tf  
+    terraform.tfvars  
+    output.tf  
+ README.md  
 
-Spring Dependencies:
-- Spring Web
-- Thymeleaf 
-- Spring Boot Dev Tools
+## Prerequisites
+Git, Java 17+, Docker, Jenkins, Terraform, Kubernetes CLI (kubectl)
 
-## 3. Data source used: 
+## How to Access Locally
 
-COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
+### Run Using Maven
+git clone https://github.com/AnnaReddybandi/covid-tracker-application-master.git  
+cd covid-tracker-application-master  
+./mvnw clean package  
+./mvnw spring-boot:run  
 
-https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series
+Access URL: http://localhost:8080
 
-## 4. Installation:
+### Run Using Docker
+docker build -t covid-tracker-app .  
+docker run -d -p 8080:8080 --name covid-tracker covid-tracker-app  
 
-i. Clone the git repo
+Access URL: http://localhost:8080
 
-```
-https://github.com/AAdewunmi/covid-tracker-application.git
-```
+## CI/CD Pipeline (Jenkins)
+The Jenkins pipeline automates code checkout, Maven build, Docker image creation, and deployment readiness.
 
-ii. Open project folder
+Pipeline Flow:  
+GitHub  Jenkins  Build  Test  Docker  Deploy  
 
-iii. Explore
+Pipeline definition is available in the `jenkinsfile`.
 
-## 5. How To Use:
+## Infrastructure as Code (Terraform)
+Terraform scripts provision AWS infrastructure such as VPC, Security Groups, Key Pair, Jenkins, and EKS.
 
-- Run CovidTrackerApplication.java in Intellij IDE.
+Terraform Commands:  
+terraform init  
+terraform validate  
+terraform plan  
+terraform apply  
 
-- Open http://localhost:8080 in any web browser and view.
+Note: AWS resources are not created due to account limitations. The setup is production-ready.
 
-## 6. Demo (UI Screenshot):
+## Kubernetes Deployment
+Kubernetes deployment and service configuration is defined in `deployment-service.yml`.
 
-![This is an image](src/main/java/com/application/covidtrackerapplication/images/Screenshot.png)
+Apply Configuration:  
+kubectl apply -f deployment-service.yml  
 
-## 7. Contribution:
+## Source Code Repository
+https://github.com/AnnaReddybandi/covid-tracker-application-master
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Project Objective:
 
-## Adapted from:
 
-UDEMY: Java Development Mega Course: Build Projects Practically
+This project is a Covid Tracker application built using Spring Boot, and the main objective was to demonstrate an end-to-end DevOps automation workflow.
 
-(Java Programming Course: Learn Development of JAVA Projects Using JSP, JDBC, Servlets, Swing, Spring Boot, Maven, Hibernate)
+I started with the application layer, where the backend is developed using Java and Spring Boot, and Maven is used as the build tool.
 
-Project Name: Project 39: Covid Information Tracker
+Next, I containerized the application using Docker. The Dockerfile packages the Spring Boot JAR into a container so that the application runs consistently across all environments.
 
-Created by: Engineering.Org.In
+For CI/CD, I created a Jenkins pipeline defined in the jenkinsfile. Whenever code is pushed to GitHub, Jenkins checks out the code, builds the application using Maven, creates a Docker image, and prepares it for deployment.
 
-Last updated: 09/2022
+For infrastructure, I used Terraform as Infrastructure as Code. The Terraform scripts define AWS resources such as VPC, security groups, key pairs, Jenkins installation, and an EKS cluster. This makes the infrastructure reusable, version-controlled, and production-ready.
 
-URL: https://www.udemy.com/course/build-real-world-java-projects-using-spring-jsp-jdbc/
+For deployment and orchestration, I added Kubernetes configuration using a deployment and service YAML file. This enables container deployment, scaling, and service exposure, and the setup is ready for EKS deployment.
+
+Currently, AWS resources are not deployed due to account limitations, but the entire setup is cloud-ready and can be deployed with minimal changes.
+
+Overall, this project demonstrates real-world DevOps practices including CI/CD automation, containerization, infrastructure as code, and Kubernetes-ready deployment.
+
