@@ -67,7 +67,7 @@ Step 3: Run Docker Container
 docker run -d -p 9088:8080 --name covid-tracker covid-tracker-app
 
 
-Access the app: http://localhost:9088
+Access the app: http://localhost:9088/covid
 
 Step 4: CI/CD with Jenkins
 
